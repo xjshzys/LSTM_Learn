@@ -28,6 +28,7 @@ X = X / float(len(alphabet))
 y = np_utils.to_categorical(dataY)
 # create and fit the model
 model = Sequential()
+print(X.shape)
 model.add(LSTM(32, input_shape=(X.shape[1], X.shape[2])))
 model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
