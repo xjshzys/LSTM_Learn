@@ -58,8 +58,8 @@ if __name__=='__main__':
 	model = BuildModel(TrX.shape[1], TrX.shape[2])
 	
 	model.compile(loss='mean_squared_error', optimizer='adam')
-	model.fit(TrX, TrY, epochs=3, batch_size=1)
-
+	model.fit(TrX, TrY, epochs=1, batch_size=1)
+ 
 	for i in TeX:
 		temp=[]
 		for j in i:
@@ -77,5 +77,5 @@ if __name__=='__main__':
 
 	#print(TeX, TrainPredict)
 	
-	#trainScore = math.sqrt(mean_squared_error(TrX[0], TrainPredict[:,0])) 
-	#print('Train Score: %.2f RMSE' % (trainScore))
+	trainScore = math.sqrt(mean_squared_error(NumReal[10:], NumPred[10:-10])) 
+	print('Train Score: %.2f RMSE' % (trainScore))
