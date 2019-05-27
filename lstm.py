@@ -10,6 +10,8 @@ from sklearn.metrics import mean_squared_error
 
 DataPath = "Data\\"
 DataFile = "sinewave.csv"
+ModelSavePath = "Model\\"
+ModelSaveName = "LSTM.model"
 
 TrainSize = 0.6 #训练集占比
 LookBack = 10 #观测步长
@@ -71,6 +73,8 @@ if __name__=='__main__':
 	
 	model.compile(loss='mean_squared_error', optimizer='adam')
 	model.fit(TrX, TrY, epochs=1, batch_size=1)
+
+	model.save(ModelSaveName)
  
 	for i in TeX:
 		temp=[]
