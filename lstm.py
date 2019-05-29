@@ -8,6 +8,7 @@ from keras.layers import LSTM
 from keras.layers import SimpleRNN
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
+import datetime
 
 Configs = json.loads(open("config.json").read())
 LookBack = Configs["LookBack"]
@@ -64,11 +65,13 @@ if __name__=='__main__':
 		NumPred.append(0)
 
 	TrX, TrY, TeX, TeY = DataRead()
-	#model = BuildModel(TrX.shape[1], TrX.shape[2]) #LSTM模型
-	model = BuildSimRnn(TrX.shape[1], TrX.shape[2]) #RNN模型
+	model = BuildModel(TrX.shape[1], TrX.shape[2]) #LSTM模型
+	#model = BuildSimRnn(TrX.shape[1], TrX.shape[2]) #RNN模型
 
 	model.compile(loss=Configs["loss"], optimizer=Configs["optimizer"])
+	StartTime = datetime.datetime.now()
 	model.fit(TrX, TrY, epochs=Configs["epochs"], batch_size=Configs["batchsize"])
+	EndTime = datetime.datetime.now()
 
 	model.save(Configs["ModelSaveFile"])
 
@@ -84,10 +87,14 @@ if __name__=='__main__':
 
 	#均方根误差计算，位移LookBack个步长
 	trainScore = math.sqrt(mean_squared_error(NumReal[LookBack:], NumPred[LookBack:LookBack*-1]))
-	print('Train Score: %.2f RMSE' % (trainScore))
 
 	#画图
-	fig = plt.figure(num=1, figsize=(15, 8),dpi=80)
+	plt.rcParams['font.sans-serif'] = ['KaiTi']
+	plt.rcParams['axes.unicode_minus'] = False
+	plt.rcParams['font.size'] = 6
+
+	fig = plt.figure(num=1, figsize=(15, 8),dpi=200)
+	plt.title("用时 %.2f 秒, 损失值为 %.2f" %((EndTime-StartTime).seconds, trainScore))
 	plt.plot(NumReal, label='Real')
 	plt.plot(NumPred, label='Predict')
 	plt.show()
