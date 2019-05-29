@@ -91,12 +91,11 @@ if __name__=='__main__':
 	#画图
 	plt.rcParams['font.sans-serif'] = ['KaiTi']
 	plt.rcParams['axes.unicode_minus'] = False
-	plt.rcParams['font.size'] = 6
+	plt.rcParams['font.size'] = 8
 
-	fig = plt.figure(num=1, figsize=(15, 8),dpi=200)
-	plt.title("用时 %.2f 秒, 损失值为 %.2f" %((EndTime-StartTime).seconds, trainScore))
-	plt.plot(NumReal, label='Real')
-	plt.plot(NumPred, label='Predict')
+	plt.figure(num=1, figsize=(15, 8),dpi=150)
+	plt.title("用时 %.2f 秒, 损失值为 %.5f" %((EndTime-StartTime).microseconds/10000, trainScore))
+	plt.plot(NumReal, label='真实值')
+	plt.plot(NumPred, label='预测值')
+	plt.legend()
 	plt.show()
-
-	#print(TeX, TrainPredict)
