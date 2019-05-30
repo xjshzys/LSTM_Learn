@@ -1,2 +1,3 @@
 .vscode
 /*.model
+/NeuralNet/__pycache__

@@ -2,32 +2,15 @@ import pandas as pd
 import numpy as np
 import math
 import json
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers import SimpleRNN
+from NeuralNet.Nets import SingleLayerTimeSeriesRNN as SRNN
+from NeuralNet.Nets import SingleLayerTimeSeriesLSTM as SLSTM
+from NeuralNet.Nets import MultipLayerTimeSeriesLSTM as MLSTM
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 import datetime
 
 Configs = json.loads(open("config.json").read())
 LookBack = Configs["LookBack"]
-
-def BuildModel(ISX, ISY):
-	model = Sequential()
-
-	model.add(LSTM(32,input_shape=(ISX,ISY)))
-	model.add(Dense(1))
-
-	return model
-
-def BuildSimRnn(ISX, ISY):
-	model = Sequential()
-
-	model.add(SimpleRNN(32,input_shape=(ISX,ISY)))
-	model.add(Dense(1))
-
-	return model
 
 def DataXY(Data):
 	DataX, DataY = [], []
@@ -65,8 +48,9 @@ if __name__=='__main__':
 		NumPred.append(0)
 
 	TrX, TrY, TeX, TeY = DataRead()
-	model = BuildModel(TrX.shape[1], TrX.shape[2]) #LSTM模型
-	#model = BuildSimRnn(TrX.shape[1], TrX.shape[2]) #RNN模型
+	#model = MLSTM.build(TrX.shape[1], TrX.shape[2])
+	model = SLSTM.build(TrX.shape[1], TrX.shape[2]) #LSTM模型
+	#model = SRNN.build(TrX.shape[1], TrX.shape[2]) #RNN模型
 
 	model.compile(loss=Configs["loss"], optimizer=Configs["optimizer"])
 	StartTime = datetime.datetime.now()
