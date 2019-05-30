@@ -9,7 +9,7 @@ Configs = json.loads(open("config.json").read())
 LookBack = Configs["LookBack"]
 
 if __name__=='__main__':
-	TrX, TrY, TeX, TeY = DataIO.DataRead(Configs["DataPath"])
+	TrX, TrY, TeX = DataIO.DataRead(Configs["DataPath"])
 	#model = MLSTM.build(TrX.shape[1], TrX.shape[2])
 	model = SLSTM.build(TrX.shape[1], TrX.shape[2]) #LSTM模型
 	#model = SRNN.build(TrX.shape[1], TrX.shape[2]) #RNN模型
