@@ -1,3 +1,7 @@
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 import json
 from NeuralNet.Nets import SingleLayerTimeSeriesRNN as SRNN
 from NeuralNet.Nets import SingleLayerTimeSeriesLSTM as SLSTM
@@ -10,8 +14,8 @@ LookBack = Configs["LookBack"]
 
 if __name__=='__main__':
 	TrX, TrY, TeX = DataIO.DataRead(Configs["DataPath"])
-	#model = MLSTM.build(TrX.shape[1], TrX.shape[2])
-	model = SLSTM.build(TrX.shape[1], TrX.shape[2]) #LSTM模型
+	model = MLSTM.build(TrX.shape[1], TrX.shape[2])
+	#model = SLSTM.build(TrX.shape[1], TrX.shape[2]) #LSTM模型
 	#model = SRNN.build(TrX.shape[1], TrX.shape[2]) #RNN模型
 
 	model.compile(loss=Configs["loss"], optimizer=Configs["optimizer"])

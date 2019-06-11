@@ -1,10 +1,10 @@
 {
-    "DataPath": "Data\\sinewave.csv",
+    "DataPath": "Data\\1.csv",
     "ModelSaveFile": "model.model",
     "TrainSize": 0.6,
     "LookBack": 10,
     "epochs": 3,
     "batchsize": 10,
     "loss": "mean_squared_error",
-    "optimizer": "adam"
+    "optimizer": "Adamax"
 }
